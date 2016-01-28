@@ -13,10 +13,14 @@ from random import randint
 
 class file_mod:
     SECOND = 1
-    MINUTE = 60
-    HOUR = 3600
-    DAY = 86400
-    YEAR = 31557600
+    MINUTE = SECOND * 60
+    HOUR = MINUTE * 60
+    DAY = HOUR * 24
+    # Will need to consider 28, 29, 30, 31
+    # 30 for now...
+    MONTH = DAY * 30
+    # Will need to consider leap years...
+    YEAR = DAY * 365
 
     def __init__(self, file):
         self.file = os.stat(file)
