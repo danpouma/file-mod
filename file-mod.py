@@ -1,50 +1,130 @@
 '''
 Dan P
+
 File modifier
+
 Change basic aspects of file
-*Access time
-*Modified time
-*Etc
 '''
 import os
-import time
 from datetime import datetime
 from stat import *
-from random import randint
 
 class file_mod:
     SECOND = 1
     MINUTE = SECOND * 60
     HOUR = MINUTE * 60
     DAY = HOUR * 24
-    # Will need to consider 28, 29, 30, 31
-    # 30 for now...
+    
+    # Use datetime to deterime correct days
+    # based on month.
     MONTH = DAY * 30
-    # Will need to consider leap years...
+    
+    # Use datetime to determine correct days
+    # in year based on leap years.
     YEAR = DAY * 365
 
+    # Constructor
     def __init__(self, file):
+        # Fie to mod
         self.file = os.stat(file)
 
         # Time of last access
-        self.access = self.file[ST_ATIME]
+        self.atime = self.file[ST_ATIME]
 
         #Time of last modification
-        self.modification = self.file[ST_MTIME]
+        self.mtime = self.file[ST_MTIME]
 
-
+    # Accessors
     def get_mtime(self):
-        return self.modification
+        return self.mtime
 
     def get_atime(self):
-        return self.access
+        return self.atime
 
+    # Modification mutators
+    def set_mtime(self, mtime):
+        self.mtime = mtime
+
+    def add_seconds_mtime(self, seconds):
+        self.mtime += seconds
+        
+    def add_minutes_mtime(self, minutes):
+        self.mtime += (minutes * MINUTE)
+
+    def add_hours_mtime(self, hours):
+        self.mtime += (hours * HOUR)
+
+    def add_days_mtime(self, days):
+        self.mtime += (days * DAY)
+
+    def add_months_mtime(self, months):
+        self.mtime += (months * MONTH)
+
+    def add_years_mtime(self, years):
+        self.mtime += (years * YEAR)
+
+    def remove_seconds_mtime(self, seconds):
+        self.mtime -= seconds
+        
+    def remove_minutes_mtime(self, minutes):
+        self.mtime -= (minutes * MINUTE)
+
+    def remove_hours_mtime(self, hours):
+        self.mtime -= (hours * HOUR)
+
+    def remove_days_mtime(self, days):
+        self.mtime -= (days * DAY)
+
+    def remove_months_mtime(self, months):
+        self.mtime -= (months * MONTH)
+
+    def remove_years_mtime(self, years):
+        self.mtime -= (years * YEAR)
+
+
+    # Accesor mutators
+    def set_atime(self, atime):
+        self.atime = atime
+        
+    def add_seconds_atime(self, seconds):
+        self.atime += seconds
+        
+    def add_minutes_atime(self, minutes):
+        self.atime += (minutes * MINUTE)
+
+    def add_hours_atime(self, hours):
+        self.atime += (hours * HOUR)
+
+    def add_days_atime(self, days):
+        self.atime += (days * DAY)
+
+    def add_months_atime(self, months):
+        self.atime += (months * MONTH)
+
+    def add_years_atime(self, years):
+        self.atime += (years * YEAR)
+        
+    def remove_seconds_atime(self, seconds):
+        self.atime -= seconds
+        
+    def remove_minutes_atime(self, minutes):
+        self.atime -= (minutes * MINUTE)
+
+    def remove_hours_atime(self, hours):
+        self.atime -= (hours * HOUR)
+
+    def remove_days_atime(self, days):
+        self.atime -= (days * DAY)
+
+    def remove_months_atime(self, months):
+        self.atime -= (months * MONTH)
+
+    def remove_years_atime(self, years):
+        self.atime -= (years * YEAR)
+
+    
     # Refactor code below...
-    def set_time(self, time):
-        self.time = time
 
-    def add_seconds(self, seconds):
-        self.time += seconds
 
     def remove_seconds(self, seconds):
         self.time -= seconds
@@ -83,7 +163,7 @@ class file_mod:
 # This is a test function to display the ticks
 # as a date using datetime module
 # *** Can throw this into class for even more capability!
-def tick_to_date(ticks):
+def ticks_to_date(ticks):
     return datetime.fromtimestamp(ticks)
 
 
