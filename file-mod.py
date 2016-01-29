@@ -8,6 +8,7 @@ Change basic aspects of file
 '''
 import os
 import time
+from datetime import datetime
 from stat import *
 from random import randint
 
@@ -24,12 +25,21 @@ class file_mod:
 
     def __init__(self, file):
         self.file = os.stat(file)
-        self.time = self.file[ST_MTIME]
+
+        # Time of last access
+        self.access = self.file[ST_ATIME]
+
+        #Time of last modification
+        self.modification = self.file[ST_MTIME]
 
 
-    def get_time(self):
-        return self.time
+    def get_mtime(self):
+        return self.modification
 
+    def get_atime(self):
+        return self.access
+
+    # Refactor code below...
     def set_time(self, time):
         self.time = time
 
@@ -63,8 +73,19 @@ class file_mod:
     def remove_years(self, years):
         self.time -= (years * YEAR)
 
-    def deploy(self, time):
-        os.utime(self.file, (self.time, self.time))
+    # Will this needs parameters?
+    # double check...
+    def deploy(self):
+        # This is what changes the file
+        # based on access and modification times
+        os.utime(self.file, (self.acess, self.modification))
+
+# This is a test function to display the ticks
+# as a date using datetime module
+# *** Can throw this into class for even more capability!
+def tick_to_date(ticks):
+    return datetime.fromtimestamp(ticks)
+
 
 def main():  
     # Files in current directory...
@@ -72,10 +93,8 @@ def main():
 
     for f in files:
         modz = file_mod(f)
-        print modz.get_time()
-
-
-
+        print modz.get_mtime()
+        print tick_to_date(modz.get_mtime())
 
 if __name__ == "__main__":
     main()
