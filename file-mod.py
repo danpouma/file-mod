@@ -122,37 +122,6 @@ class file_mod:
     def remove_years_atime(self, years):
         self.atime -= (years * YEAR)
 
-    
-    # Refactor code below...
-
-
-    def remove_seconds(self, seconds):
-        self.time -= seconds
-
-    def add_minutes(self, minutes):
-        self.time += (minutes * MINUTE)
-
-    def remove_minutes(self, minutes):
-        self.time -= (minutes * MINUTE)
-
-    def add_hours(self, hours):
-        self.time += int(hours * 3600)
-
-    def remove_hours(self, hours):
-        self.time -= hours * 3600
-
-    def add_days(self, days):
-        self.time += (days * DAY)
-
-    def remove_days(self, days):
-        self.time -= (days * DAY)
-
-    def add_years(self, years):
-        self.time += (years * YEAR)
-
-    def remove_years(self, years):
-        self.time -= (years * YEAR)
-
     # Will this needs parameters?
     # double check...
     def deploy(self):
