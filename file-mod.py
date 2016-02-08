@@ -9,23 +9,29 @@ import os
 from datetime import datetime
 from stat import *
 
+SECOND = 1
+MINUTE = SECOND * 60
+HOUR = MINUTE * 60
+DAY = HOUR * 24
+
+# Use datetime to deterime correct days
+# based on month.
+MONTH = DAY * 30
+
+# Use datetime to determine correct days
+# in year based on leap years.
+YEAR = DAY * 365
+
 class file_mod:
-    SECOND = 1
-    MINUTE = SECOND * 60
-    HOUR = MINUTE * 60
-    DAY = HOUR * 24
-    
-    # Use datetime to deterime correct days
-    # based on month.
-    MONTH = DAY * 30
-    
-    # Use datetime to determine correct days
-    # in year based on leap years.
-    YEAR = DAY * 365
+    # Moved time constants to be global
+    # not good practice... fix later
 
     # Constructor
     def __init__(self, file):
-        # Fie to mod
+        # File name
+        self.file_name = file
+
+        # File to mod
         self.file = os.stat(file)
 
         # Time of last access
@@ -127,7 +133,7 @@ class file_mod:
     def deploy(self):
         # This is what changes the file
         # based on access and modification times
-        os.utime(self.file, (self.acess, self.modification))
+        os.utime(self.file_name, (self.atime, self.mtime))
 
 # This is a test function to display the ticks
 # as a date using datetime module
@@ -141,9 +147,36 @@ def main():
     files = os.listdir('.')
 
     for f in files:
-        modz = file_mod(f)
-        print modz.get_mtime()
-        print tick_to_date(modz.get_mtime())
+        # Only look at word or pdf file
+        if (f.endswith('.docx') or f.endswith('.pdf')):
+            print f
+            modz = file_mod(f)
+
+            print "Before..."
+            print ticks_to_date(modz.get_mtime())
+            print ticks_to_date(modz.get_atime())
+
+            # Modify file times here...
+            modz.remove_days_atime(1)
+            modz.remove_days_mtime(1)
+
+            modz.remove_hours_atime(2)
+            modz.remove_hours_mtime(2)
+
+            modz.remove_minutes_atime(23)
+            modz.remove_minutes_mtime(23)
+
+            print "After..."
+            print ticks_to_date(modz.get_mtime())
+            print ticks_to_date(modz.get_atime())
+
+            # Clean output
+            print "*" * 20
+
+            # Uncomment deploy method only once
+            # you verified before and after time
+            #modz.deploy()
+
 
 if __name__ == "__main__":
     main()
